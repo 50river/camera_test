@@ -1,5 +1,6 @@
 import { PaddleOCREngine } from '../engines/OCREngine'
 import { ReceiptDataExtractor } from '../engines/DataExtractionEngine'
+import { ReceiptNormalizationEngine } from '../engines/NormalizationEngine'
 import { ReceiptStorage } from './storage'
 import { configManager } from './configManager'
 import { appLifecycle } from './appLifecycle'
@@ -54,6 +55,7 @@ export class ServiceRegistry {
       // Register engines
       this.register('ocrEngine', lifecycleServices.ocrEngine)
       this.register('dataExtractor', new ReceiptDataExtractor())
+      this.register('normalizationEngine', new ReceiptNormalizationEngine())
       this.register('storage', lifecycleServices.storage)
 
       this.initialized = true
@@ -113,6 +115,13 @@ export class ServiceRegistry {
    */
   public getDataExtractor(): ReceiptDataExtractor {
     return this.get<ReceiptDataExtractor>('dataExtractor')
+  }
+
+  /**
+   * Get Normalization Engine
+   */
+  public getNormalizationEngine(): ReceiptNormalizationEngine {
+    return this.get<ReceiptNormalizationEngine>('normalizationEngine')
   }
 
   /**

@@ -64,3 +64,71 @@ Object.defineProperty(navigator, 'mediaDevices', {
     })
   }
 })
+
+// Mock IndexedDB
+const mockIDBRequest = {
+  result: null as any,
+  error: null,
+  onsuccess: null as any,
+  onerror: null as any,
+  onupgradeneeded: null as any
+}
+
+const mockIDBDatabase = {
+  transaction: vi.fn().mockReturnValue({
+    objectStore: vi.fn().mockReturnValue({
+      add: vi.fn().mockReturnValue(mockIDBRequest),
+      put: vi.fn().mockReturnValue(mockIDBRequest),
+      get: vi.fn().mockReturnValue(mockIDBRequest),
+      getAll: vi.fn().mockReturnValue(mockIDBRequest),
+      delete: vi.fn().mockReturnValue(mockIDBRequest),
+      clear: vi.fn().mockReturnValue(mockIDBRequest),
+      createIndex: vi.fn(),
+      index: vi.fn().mockReturnValue({
+        get: vi.fn().mockReturnValue(mockIDBRequest),
+        getAll: vi.fn().mockReturnValue(mockIDBRequest)
+      })
+    })
+  }),
+  createObjectStore: vi.fn().mockReturnValue({
+    createIndex: vi.fn()
+  }),
+  close: vi.fn()
+}
+
+global.indexedDB = {
+  open: vi.fn().mockImplementation(() => {
+    const request = { ...mockIDBRequest }
+    setTimeout(() => {
+      request.result = mockIDBDatabase as any
+      if (request.onsuccess) (request.onsuccess as any)({ target: request } as any)
+    }, 0)
+    return request
+  }),
+  deleteDatabase: vi.fn().mockReturnValue(mockIDBRequest)
+} as any
+
+// Mock IDBKeyRange
+global.IDBKeyRange = {
+  bound: vi.fn(),
+  only: vi.fn(),
+  lowerBound: vi.fn(),
+  upperBound: vi.fn()
+} as any
+
+// Mock Worker
+global.Worker = class {
+  onmessage = null
+  onerror = null
+  onmessageerror = null
+  
+  constructor(scriptURL: string | URL, options?: WorkerOptions) {
+    // Mock worker that doesn't actually run
+  }
+  
+  postMessage = vi.fn()
+  terminate = vi.fn()
+  addEventListener = vi.fn()
+  removeEventListener = vi.fn()
+  dispatchEvent = vi.fn()
+} as any

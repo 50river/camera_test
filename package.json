@@ -18,6 +18,7 @@
     "generate-icons": "node scripts/generate-icons.js",
     "analyze": "npm run build && npx vite-bundle-analyzer dist/assets/*.js",
     "serve": "npm run build && npx serve dist -s",
+    "serve-dist": "npx http-server dist -p 3001 -c-1",
     "lighthouse": "npm run build && npx lighthouse http://localhost:3000 --output=html --output-path=./lighthouse-report.html"
   },
   "dependencies": {

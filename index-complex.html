@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    
+    <!-- Basic Meta Tags -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <meta name="description" content="ブラウザ内で完全に動作する日本語領収書OCRアプリケーション。PaddleOCRとWebAssemblyを使用してプライベートで高速な文字認識を提供します。" />
+    <meta name="keywords" content="領収書,OCR,文字認識,日本語,ブラウザ,オフライン,プライベート" />
+    <meta name="author" content="Receipt OCR Team" />
+    <meta name="robots" content="index, follow" />
+    
+    <!-- PWA Meta Tags -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#007bff" />
+    <meta name="background-color" content="#ffffff" />
+    <meta name="display" content="standalone" />
+    <meta name="orientation" content="portrait-primary" />
+    
+    <!-- Apple PWA Meta Tags -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="領収書OCR" />
+    <link rel="apple-touch-icon" href="/vite.svg" />
+    
+    <!-- Microsoft PWA Meta Tags -->
+    <meta name="msapplication-TileColor" content="#007bff" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="領収書OCR - ブラウザ内OCRアプリ" />
+    <meta property="og:description" content="プライベートで高速な日本語領収書OCR。ブラウザ内で完全に動作し、データは外部に送信されません。" />
+    <meta property="og:image" content="/icons/icon-512x512.png" />
+    <meta property="og:url" content="/" />
+    <meta property="og:site_name" content="領収書OCR" />
+    <meta property="og:locale" content="ja_JP" />
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="領収書OCR - ブラウザ内OCRアプリ" />
+    <meta name="twitter:description" content="プライベートで高速な日本語領収書OCR。ブラウザ内で完全に動作し、データは外部に送信されません。" />
+    <meta name="twitter:image" content="/icons/icon-512x512.png" />
+    
+    <!-- Security Headers (temporarily disabled for debugging) -->
+    <!-- 
+    <meta http-equiv="Content-Security-Policy" content="
+      default-src 'self';
+      script-src 'self' 'unsafe-inline' 'unsafe-eval' blob:;
+      style-src 'self' 'unsafe-inline';
+      img-src 'self' data: blob:;
+      font-src 'self' data:;
+      connect-src 'self' blob:;
+      worker-src 'self' blob:;
+      child-src 'self' blob:;
+      object-src 'none';
+      base-uri 'self';
+      form-action 'self';
+    " />
+    -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+    
+    <!-- Performance Hints -->
+    <link rel="preconnect" href="/" />
+    <link rel="dns-prefetch" href="/" />
+    
+    <title>領収書OCR - ブラウザ内OCRアプリ</title>
+  </head>
+  <body>
+    <noscript>
+      <div style="
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        padding: 2rem;
+        text-align: center;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        background: #f8f9fa;
+      ">
+        <h1 style="color: #dc3545; margin-bottom: 1rem;">JavaScriptが必要です</h1>
+        <p style="color: #666; margin-bottom: 2rem;">
+          このアプリケーションを使用するにはJavaScriptを有効にしてください。<br>
+          ブラウザ内でOCR処理を行うため、JavaScriptが必須です。
+        </p>
+        <p style="color: #666; font-size: 0.9rem;">
+          JavaScript is required to run this OCR application.
+        </p>
+      </div>
+    </noscript>
+    
+    <div id="root"></div>
+    
+    <!-- Loading indicator -->
+    <div id="loading" style="
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    ">
+      <div style="
+        width: 40px;
+        height: 40px;
+        border: 4px solid #e9ecef;
+        border-top: 4px solid #007bff;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin-bottom: 1rem;
+      "></div>
+      <p style="color: #666; margin: 0;">アプリケーションを読み込み中...</p>
+      <style>
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+      </style>
+    </div>
+    
+    <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- Debug and Service Worker Registration -->
+    <script>
+      console.log('HTML script starting...');
+      
+      // Debug information
+      console.log('User Agent:', navigator.userAgent);
+      console.log('Document ready state:', document.readyState);
+      
+      // Check if required elements exist
+      document.addEventListener('DOMContentLoaded', () => {
+        console.log('DOM Content Loaded');
+        const root = document.getElementById('root');
+        const loading = document.getElementById('loading');
+        console.log('Root element:', root);
+        console.log('Loading element:', loading);
+      });
+      
+      // Hide loading indicator when app loads
+      window.addEventListener('load', () => {
+        console.log('Window load event fired');
+        const loading = document.getElementById('loading');
+        if (loading) {
+          console.log('Hiding loading indicator');
+          loading.style.display = 'none';
+        } else {
+          console.error('Loading element not found');
+        }
+      });
+      
+      // Global error handler
+      window.addEventListener('error', (event) => {
+        console.error('Global error:', event.error);
+        console.error('Error details:', {
+          message: event.message,
+          filename: event.filename,
+          lineno: event.lineno,
+          colno: event.colno
+        });
+      });
+      
+      // Unhandled promise rejection handler
+      window.addEventListener('unhandledrejection', (event) => {
+        console.error('Unhandled promise rejection:', event.reason);
+      });
+      
+      // Service worker disabled for debugging
+      
+      // PWA install prompt
+      let deferredPrompt;
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        
+        // Show install button or banner
+        const installBanner = document.createElement('div');
+        installBanner.innerHTML = `
+          <div style="
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            background: #007bff;
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+          ">
+            <span>アプリをインストールして、オフラインでも使用できます</span>
+            <button id="install-btn" style="
+              background: white;
+              color: #007bff;
+              border: none;
+              padding: 0.5rem 1rem;
+              border-radius: 4px;
+              cursor: pointer;
+              font-weight: 500;
+            ">インストール</button>
+            <button id="dismiss-btn" style="
+              background: transparent;
+              color: white;
+              border: 1px solid white;
+              padding: 0.5rem 1rem;
+              border-radius: 4px;
+              cursor: pointer;
+              margin-left: 0.5rem;
+            ">後で</button>
+          </div>
+        `;
+        
+        document.body.appendChild(installBanner);
+        
+        document.getElementById('install-btn').addEventListener('click', () => {
+          deferredPrompt.prompt();
+          deferredPrompt.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+              console.log('User accepted the install prompt');
+            }
+            deferredPrompt = null;
+            installBanner.remove();
+          });
+        });
+        
+        document.getElementById('dismiss-btn').addEventListener('click', () => {
+          installBanner.remove();
+        });
+      });
+    </script>
+  </body>
+</html>

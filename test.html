@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Page</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 2rem;
+            background: #f8f9fa;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>領収書OCR - テストページ</h1>
+        <p id="message">基本的なHTMLページが正常に表示されています。</p>
+        <button class="button" onclick="testFunction()">テストボタン</button>
+        
+        <h2>診断情報</h2>
+        <ul>
+            <li>JavaScript: <span id="js-status">確認中...</span></li>
+            <li>ブラウザ: <span id="browser-info">確認中...</span></li>
+            <li>画面サイズ: <span id="screen-info">確認中...</span></li>
+        </ul>
+    </div>
+
+    <script>
+        function testFunction() {
+            document.getElementById('message').textContent = 'ボタンが正常に動作しています！';
+        }
+
+        // 診断情報を表示
+        document.getElementById('js-status').textContent = '動作中';
+        document.getElementById('browser-info').textContent = navigator.userAgent;
+        document.getElementById('screen-info').textContent = window.innerWidth + 'x' + window.innerHeight;
+
+        console.log('Test page loaded successfully');
+    </script>
+</body>
+</html>
