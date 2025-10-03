@@ -1,0 +1,15 @@
+export { CameraCapture } from './CameraCapture'
+export { ImagePreview } from './ImagePreview'
+export { RegionSelector } from './RegionSelector'
+export { ReceiptForm } from './ReceiptForm'
+export { ExportPanel } from './ExportPanel'
+export { ErrorBoundary, useErrorHandler } from './ErrorBoundary'
+export { NotificationCenter, useNotifications } from './NotificationCenter'
+export { HelpSystem, useHelp } from './HelpSystem'
+export { ProgressIndicator, useProgress } from './ProgressIndicator'
+export { PerspectiveCorrector } from './PerspectiveCorrector'
+
+// Export service registry utilities
+export { serviceRegistry, useService, useServices } from '../utils/serviceRegistry'
+export { configManager } from '../utils/configManager'
+export { appLifecycle } from '../utils/appLifecycle'

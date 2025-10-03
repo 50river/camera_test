@@ -1,0 +1,5 @@
+# This directory will contain the PaddleOCR ONNX models:
+# - det_model.onnx (detection model)
+# - rec_model.onnx (recognition model)
+#
+# These models should be downloaded and placed here before running the application.

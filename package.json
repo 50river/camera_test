@@ -1,0 +1,48 @@
+{
+  "name": "receipt-ocr-webapp",
+  "version": "1.0.0",
+  "description": "Client-side Japanese receipt OCR web application",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "build:prod": "node scripts/build-production.js",
+    "preview": "vite preview",
+    "type-check": "tsc --noEmit",
+    "test": "vitest --run",
+    "test:unit": "vitest --run src/**/*.test.{ts,tsx} --exclude src/test/integration/**",
+    "test:integration": "vitest --run src/test/integration/**/*.test.{ts,tsx}",
+    "test:watch": "vitest",
+    "test:coverage": "vitest --run --coverage",
+    "test:browser": "vitest --run src/test/integration/browser-compatibility.test.tsx",
+    "generate-icons": "node scripts/generate-icons.js",
+    "analyze": "npm run build && npx vite-bundle-analyzer dist/assets/*.js",
+    "serve": "npm run build && npx serve dist -s",
+    "lighthouse": "npm run build && npx lighthouse http://localhost:3000 --output=html --output-path=./lighthouse-report.html"
+  },
+  "dependencies": {
+    "exif-js": "^2.3.0",
+    "onnxruntime-web": "^1.23.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/exif-js": "^2.3.1",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "@vitejs/plugin-react": "^4.0.0",
+    "eslint": "^8.45.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.0",
+    "jsdom": "^27.0.0",
+    "terser": "^5.44.0",
+    "typescript": "^5.0.2",
+    "vite": "^4.4.5",
+    "vitest": "^0.34.0"
+  }
+}

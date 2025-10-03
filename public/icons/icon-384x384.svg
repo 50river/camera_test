@@ -1,0 +1,11 @@
+<svg width="384" height="384" viewBox="0 0 384 384" xmlns="http://www.w3.org/2000/svg">
+  <rect width="384" height="384" fill="#007bff" rx="38.400000000000006"/>
+  <text x="50%" y="50%" font-family="Arial, sans-serif" font-size="115.19999999999999" 
+        fill="white" text-anchor="middle" dominant-baseline="central" font-weight="bold">
+    OCR
+  </text>
+  <rect x="38.400000000000006" y="268.79999999999995" width="307.20000000000005" height="57.599999999999994" 
+        fill="white" rx="7.68"/>
+  <rect x="57.599999999999994" y="288" width="268.79999999999995" height="19.200000000000003" 
+        fill="#007bff" rx="3.84"/>
+</svg>
